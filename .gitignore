@@ -72,7 +72,6 @@ addons/
 odoo/
 *.log
 *.bak
-__manifest__.py
 __openerp__.py
 *.swp
 .odoo_serverrc

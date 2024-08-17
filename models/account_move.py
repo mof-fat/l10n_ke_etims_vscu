@@ -438,12 +438,11 @@ class AccountMove(models.Model):
         if not error:
             self.write({
                 'l10n_ke_oscu_receipt_number': data['rcptNo'],
+                'l10n_ke_control_unit': data['sdcId'],
                 'l10n_ke_oscu_invoice_number': content['invcNo'],
                 'l10n_ke_oscu_signature': data['rcptSign'],
                 'l10n_ke_oscu_datetime': parse_etims_datetime(data['vsdcRcptPbctDate']),
                 'l10n_ke_oscu_internal_data': data['intrlData'],
-                'l10n_ke_control_unit': company.l10n_ke_control_unit,
-                'l10n_ke_control_unit': company.l10n_ke_control_unit,
             })
         else:
             # In order not to rollback, but just to avoid consuming the invoice number
