@@ -8,6 +8,13 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     l10n_ke_branch_code = fields.Char('eTIMS Branch Code', default='00')
+    contact_address_inline = fields.Char('Contact Address', compute='_compute_contact_address_inline', store=True)
+
+
+    def _compute_contact_address_inline(self):
+        for partner in self:
+            address = partner._display_address(without_company=True)
+            partner.contact_address_inline = address
 
     def _l10n_ke_oscu_partner_content(self):
         """Returns a dict with the commonly required fields on partner for requests to the VSCU """

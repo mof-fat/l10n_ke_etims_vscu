@@ -5,8 +5,8 @@
         <field name="model">account.tax</field>
         <field name="inherit_id" ref="account.view_tax_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='l10n_ke_item_code_id']" position="replace">
-                <field name="l10n_ke_tax_type_id" invisible="country_code != 'KE'"/>
+            <xpath expr="//field[@name='type_tax_use']" position="after">
+                <field name="l10n_ke_tax_type_id"/>
             </xpath>
         </field>
     </record>

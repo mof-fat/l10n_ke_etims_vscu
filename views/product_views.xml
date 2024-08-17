@@ -7,11 +7,11 @@
             <field name="inherit_id" ref="account.product_template_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='invoicing']//group[@name='accounting']" position="inside">
-                    <group name="kra_oscu" string="KRA eTIMS Details" invisible="'KE' not in fiscal_country_codes or (product_variant_count &gt; 1 and not is_product_variant)">
-                        <field name="l10n_ke_packaging_unit_id" readonly="l10n_ke_item_code"/>
+                    <group name="kra_oscu" string="KRA eTIMS Details">
+                        <field name="l10n_ke_packaging_unit_id"  attrs="{'readonly':[('l10n_ke_item_code', '!=', False)]}"/>
                         <field name="l10n_ke_packaging_quantity"/>
-                        <field name="l10n_ke_origin_country_id" readonly="l10n_ke_item_code"/>
-                        <field name="l10n_ke_product_type_code" readonly="l10n_ke_item_code"/>
+                        <field name="l10n_ke_origin_country_id"  attrs="{'readonly':[('l10n_ke_item_code', '!=', False)]}"/>
+                        <field name="l10n_ke_product_type_code"  attrs="{'readonly':[('l10n_ke_item_code', '!=', False)]}"/>
                         <field name="l10n_ke_is_insurance_applicable"/>
                         <field name="l10n_ke_item_code"/>
                         <div class="cell"/>
@@ -27,12 +27,11 @@
             <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//sheet" position="inside">
-                    <field name="fiscal_country_codes" invisible="1"/>
-                    <group name="kra_oscu" string="KRA eTIMS Details" invisible="'KE' not in fiscal_country_codes">
-                        <field name="l10n_ke_packaging_unit_id" readonly="l10n_ke_item_code"/>
+                    <group name="kra_oscu" string="KRA eTIMS Details">
+                        <field name="l10n_ke_packaging_unit_id"  attrs="{'readonly':[('l10n_ke_item_code', '!=', False)]}"/>
                         <field name="l10n_ke_packaging_quantity"/>
-                        <field name="l10n_ke_origin_country_id" readonly="l10n_ke_item_code"/>
-                        <field name="l10n_ke_product_type_code" readonly="l10n_ke_item_code"/>
+                        <field name="l10n_ke_origin_country_id"  attrs="{'readonly':[('l10n_ke_item_code', '!=', False)]}"/>
+                        <field name="l10n_ke_product_type_code"  attrs="{'readonly':[('l10n_ke_item_code', '!=', False)]}"/>
                         <field name="l10n_ke_is_insurance_applicable"/>
                         <field name="l10n_ke_item_code"/>
                         <div class="cell"/>
@@ -51,9 +50,9 @@
                 <tree editable="top" multi_edit="1">
                     <field name="display_name"/>
                     <field name="standard_price"/>
-                    <field name="l10n_ke_packaging_unit_id" readonly="l10n_ke_item_code"/>
+                    <field name="l10n_ke_packaging_unit_id" attrs="{'readonly':[('l10n_ke_item_code', '!=', False)]}"/>
                     <field name="l10n_ke_packaging_quantity"/>
-                    <field name="l10n_ke_origin_country_id" readonly="l10n_ke_item_code"/>
+                    <field name="l10n_ke_origin_country_id" attrs="{'readonly':[('l10n_ke_item_code', '!=', False)]}"/>
                     <field name="l10n_ke_product_type_code" optional="show"/>
                     <field name="unspsc_code_id"/>
                     <field name="l10n_ke_item_code" optional="hide"/>

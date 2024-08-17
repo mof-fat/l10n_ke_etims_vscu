@@ -8,12 +8,14 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     l10n_ke_server_mode = fields.Selection(
+        string="eTIMS Server Mode",
         related='company_id.l10n_ke_server_mode',
         readonly=False,
     )
     l10n_ke_oscu_serial_number = fields.Char(
         related='company_id.l10n_ke_oscu_serial_number',
         readonly=False,
+        string='Serial Number',
     )
     l10n_ke_api_url = fields.Char(
         related='company_id.l10n_ke_api_url',
@@ -22,14 +24,17 @@ class ResConfigSettings(models.TransientModel):
     l10n_ke_control_unit = fields.Char(
         related='company_id.l10n_ke_control_unit',
         readonly=False,
+        string="Control Unit ID",
     )
     l10n_ke_oscu_cmc_key = fields.Char(
         related='company_id.l10n_ke_oscu_cmc_key',
         readonly=False,
+        string="CMC Key",
     )
     l10n_ke_oscu_user_help = fields.Boolean(
         related='company_id.l10n_ke_oscu_user_help',
         readonly=False,
+        string="Show Help",
     )
     l10n_ke_oscu_user_agreement_is_readonly = fields.Boolean(
         compute='_compute_l10n_ke_oscu_user_agreement_is_readonly',
@@ -50,6 +55,9 @@ class ResConfigSettings(models.TransientModel):
         related='company_id.l10n_ke_insurance_rate',
         readonly=False,
     )
+    #TODO remove issue with Pandya
+    cash_discount=fields.Float(string="Cash Discount",readonly=False)
+    cheque_signatories_ids=fields.Float(string="Cash Discount",readonly=False)
 
     @api.depends('company_id')
     def _compute_l10n_ke_oscu_user_agreement_is_readonly(self):

@@ -2,13 +2,14 @@
 import logging
 
 from . import models
-from . import wizard
-
+# from . import wizard
+from odoo import api, SUPERUSER_ID
 
 _logger = logging.getLogger(__name__)
 
 
-def _post_init_hook(env):
+def _post_init_hook(cr,registry):
+    env = api.Environment(cr, SUPERUSER_ID, {})
     # UNSPSC category codes can be used in Kenya.
     env['product.unspsc.code'].flush_model()
     env.cr.execute('''
@@ -19,17 +20,17 @@ def _post_init_hook(env):
     env['product.unspsc.code'].invalidate_model()
 
     # Load eTIMS type on the tax
-    for company in env['res.company'].search([('chart_template', '=', 'ke')]):
-        _logger.info("Company %s already has the Kenyan localization installed, updating...", company.name)
-        ChartTemplate = env['account.chart.template'].with_company(company)
-        tax_types_to_load = {
-            tax_xmlid: values
-            for tax_xmlid, values in ChartTemplate._get_ke_account_tax_etims_type().items()
-            if ChartTemplate.ref(tax_xmlid, raise_if_not_found=False)
-        }
-        ChartTemplate._load_data({
-            'account.tax': tax_types_to_load,
-        })
+    # for company in env['res.company'].search([('chart_template', '=', 'ke')]):
+    #     _logger.info("Company %s already has the Kenyan localization installed, updating...", company.name)
+    #     ChartTemplate = env['account.chart.template'].with_company(company)
+    #     tax_types_to_load = {
+    #         tax_xmlid: values
+    #         for tax_xmlid, values in ChartTemplate._get_ke_account_tax_etims_type().items()
+    #         if ChartTemplate.ref(tax_xmlid, raise_if_not_found=False)
+    #     }
+    #     ChartTemplate._load_data({
+    #         'account.tax': tax_types_to_load,
+    #     })
 
     # Change all VSCU codes ir.model.data to noupdate, so it only gets updated through the cron
     xmls = env['ir.model.data'].search([('model', '=', 'l10n_ke_etims_vscu.code')])

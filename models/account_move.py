@@ -424,6 +424,19 @@ class AccountMove(models.Model):
 
         return super()._post(soft)
 
+    def action_l10n_ke_oscu_send_customer_invoice(self):
+        for move in self:
+            move._l10n_ke_oscu_send_customer_invoice()
+            _content, error = move._l10n_ke_oscu_send_customer_invoice()
+
+
+            if error:
+                error_msg = error['message']
+                _logger.info(error)
+                if error['code'] != '000':
+                    error_msg = _("The KRA has rejected this invoice: %s", error_msg)
+                    raise UserError(error_msg)
+
     def _l10n_ke_oscu_send_customer_invoice(self):
         company = self.company_id
 

@@ -133,7 +133,6 @@
 
         <!-- Disable the recap of tax totals in company currency at the bottom right of the invoice,
              since this info is already present in our custom tax totals grid. -->
-        <xpath expr="//div[@id='right-elements']/t[@t-call='account.document_tax_totals_company_currency_template']" position="replace"/>
 
         <xpath expr="//th[@name='th_subtotal']" position="replace">
             <th name="th_subtotal" class="text-end">
@@ -144,28 +143,6 @@
             </th>
         </xpath>
 
-        <!-- Make quantity, taxable amount and total amount negative for credit notes -->
-        <xpath expr="//td[@name='td_quantity']/span[1]" position="attributes">
-            <attribute name="t-field"/>
-            <attribute name="t-out">correct_sign(line.quantity)</attribute>
-        </xpath>
-        <xpath expr="//td[@name='td_subtotal']/span" position="attributes">
-            <attribute name="t-field"/>
-            <attribute name="t-out">correct_sign(line.price_subtotal)</attribute>
-        </xpath>
-        <xpath expr="//td[@name='td_subtotal']/span" position="attributes">
-            <attribute name="t-field"/>
-            <attribute name="t-out">correct_sign(line.price_subtotal)</attribute>
-        </xpath>
-        <xpath expr="//td[@name='td_subtotal']" position="inside">
-            <span t-field="o.currency_id.symbol"/>
-        </xpath>
-        <xpath expr="//td[@name='td_subtotal']" position="after">
-            <td name="td_total" class="text-end o_price_total">
-                <span class="text-nowrap" t-out="correct_sign(line.price_total)">27.00</span>
-                <span t-field="o.currency_id.symbol"/>
-            </td>
-        </xpath>
     </template>
 
     <!-- Workaround for Studio reports, see odoo/odoo#60660 -->
