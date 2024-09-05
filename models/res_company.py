@@ -20,6 +20,9 @@ _logger = logging.getLogger(__name__)
 
 class ResCompany(models.Model):
     _inherit = 'res.company'
+
+    kra_pin = fields.Char('KRA Pin', groups="base.group_erp_manager")
+
     l10n_ke_branch_code = fields.Char(
         related='partner_id.l10n_ke_branch_code',
         readonly=False,
