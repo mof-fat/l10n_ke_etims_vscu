@@ -11,6 +11,7 @@
                     <field name="l10n_ke_branch_code" attrs="{'invisible':[('country_code', '!=', 'KE')]}" />
                     <field name="l10n_ke_oscu_is_active" readonly="False" attrs="{'invisible':[('country_code', '!=', 'KE')]}"/>
                     <field name="l10n_ke_server_mode" attrs="{'invisible':[('country_code', '!=', 'KE')]}"/>
+                    <field name="l10n_ke_api_url" attrs="{'invisible':[('country_code', '!=', 'KE')]}"/>
                 </field>
             </field>
         </record>
