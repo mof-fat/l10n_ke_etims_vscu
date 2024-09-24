@@ -20,7 +20,8 @@ TAX_CODE_LETTERS = ['A', 'B', 'C', 'D', 'E']
 
 def format_etims_datetime(dt):
     """ Format a UTC datetime as expected by eTIMS (only digits, Kenyan timezone). """
-    return dt.replace(tzinfo=ZoneInfo('UTC')).astimezone(ZoneInfo('Africa/Nairobi')).strftime('%Y%m%d%H%M%S')
+    if dt:
+        return dt.replace(tzinfo=ZoneInfo('UTC')).astimezone(ZoneInfo('Africa/Nairobi')).strftime('%Y%m%d%H%M%S')
 
 
 def parse_etims_datetime(dt_str):
