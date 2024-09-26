@@ -224,11 +224,13 @@ class AccountMove(models.Model):
             product = line.product_id  # for ease of reference
             product_uom_qty = line.product_uom_id._compute_quantity(line.quantity, product.uom_id)
 
-            line_tax_details = next(
-                line_tax_details
-                for tax_grouping_key, line_tax_details in tax_details['tax_details_per_record'][line]['tax_details'].items()
-                if tax_grouping_key['tax'].l10n_ke_tax_type_id  # We only want to report VAT taxes
-            )
+            # line_tax_details = next(
+            #     line_tax_details
+            #     for tax_grouping_key, line_tax_details in tax_details['tax_details_per_record'][line]['tax_details'].items()
+            #     if tax_grouping_key['tax'].l10n_ke_tax_type_id  # We only want to report VAT taxes
+            # )
+
+            line_tax_details =  self._prepare_invoice_aggregated_taxes()
 
             if line.quantity and line.discount != 100:
                 # By computing the price_unit this way, we ensure that we get the price before the VAT tax, regardless of what
@@ -253,7 +255,7 @@ class AccountMove(models.Model):
                 'splyAmt':   price_subtotal_before_discount,
                 'dcRt':      line.discount,
                 'dcAmt':     discount_amount,
-                'taxTyCd':   line_tax_details['tax'].l10n_ke_tax_type_id.code,
+                'taxTyCd':   product.taxes_id.l10n_ke_tax_type_id.code,
                 'taxblAmt':  line_tax_details['base_amount'],
                 'taxAmt':    line_tax_details['tax_amount'],
                 'totAmt':    line_tax_details['base_amount'] + line_tax_details['tax_amount'],
