@@ -422,6 +422,33 @@ class ProductProduct(models.Model):
 
     # === Helpers for invoice import === #
 
+    def batch_register_products_with_etims(self):
+        """ Batch register all products with eTIMS. """
+        products = self.search([])  # Fetch all products
+        total_products = len(products)
+        registered_count = 0
+
+        for product in products:
+            try:
+                product.action_l10n_ke_oscu_save_item()
+                registered_count += 1
+            except UserError as e:
+                # Log the error and continue with the next product
+                _logger.error(f"Failed to register product {product.name} with eTIMS: {e}")
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'type': 'success' if registered_count > 0 else 'warning',
+                'message': _(
+                    "Batch registration completed: %(success)d out of %(total)d products successfully registered.",
+                    success=registered_count, total=total_products
+                ),
+                'sticky': False,
+            }
+        }
+
     @api.model
     def _l10n_ke_oscu_find_product_from_json(self, product_dict):
         """ Find a product matching that of a given product represented json format provided by the API
